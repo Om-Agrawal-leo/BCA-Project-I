@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound System - Debug & Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .test-button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px 10px 10px 0;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .test-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .test-button.danger {
+            background: #f44336;
+        }
+
+        .test-button.danger:hover {
+            background: #d32f2f;
+        }
+
+        .test-button.success {
+            background: #4CAF50;
+        }
+
+        .test-button.success:hover {
+            background: #45a049;
+        }
+
+        .test-button.warning {
+            background: #ff9800;
+        }
+
+        .test-button.warning:hover {
+            background: #e68900;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #333;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #333;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #333;
+        }
+
+        .error-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #333;
+        }
+
+        .log-box {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 15px 0;
+        }
+
+        .log-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-entry.info {
+            color: #667eea;
+        }
+
+        .log-entry.success {
+            color: #4CAF50;
+        }
+
+        .log-entry.warning {
+            color: #ff9800;
+        }
+
+        .log-entry.error {
+            color: #f44336;
+        }
+
+        .timestamp {
+            color: #999;
+            font-size: 11px;
+            margin-right: 10px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f5f5f5;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .checklist li:before {
+            content: "☐";
+            margin-right: 10px;
+            font-size: 18px;
+            color: #999;
+        }
+
+        .checklist li.checked:before {
+            content: "☑";
+            color: #4CAF50;
+        }
+
+        .checklist li.checked {
+            background: #e8f5e9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .status-badge.inactive {
+            background: #ffccbc;
+            color: #d84315;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔊 Sound System Debug & Test</h1>
+            <p>Food Ordering System - Sound Implementation Testing</p>
+        </div>
+
+        <div class="content">
+            <!-- Kitchen Panel Tests -->
+            <div class="section">
+                <h2>🍳 Kitchen Panel Sound Tests</h2>
+                
+                <div class="info-box">
+                    <strong>About:</strong> Tests the automatic sound notification when a new order arrives in the kitchen dashboard.
+                </div>
+
+                <div>
+                    <button class="test-button success" onclick="testKitchenSound()">
+                        Play Kitchen Sound
+                    </button>
+                    <button class="test-button" onclick="testKitchenNewOrder()">
+                        Simulate New Order
+                    </button>
+                    <button class="test-button warning" onclick="clearKitchenStorage()">
+                        Clear Kitchen Storage
+                    </button>
+                </div>
+
+                <h3 style="margin-top: 20px; color: #333;">Kitchen Sound Status:</h3>
+                <table>
+                    <tr>
+                        <th>Property</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Sound Enabled</td>
+                        <td><span class="status-badge active" id="kitchenSoundEnabled">Checking...</span></td>
+                    </tr>
+                    <tr>
+                        <td>Audio File</td>
+                        <td><code>/food-ordering-system/assets/sounds/se.mp3</code></td>
+                    </tr>
+                    <tr>
+                        <td>localStorage Key</td>
+                        <td><code>kitchenSoundEnabled</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Customer Panel Tests -->
+            <div class="section">
+                <h2>🛒 Customer Panel Sound Tests</h2>
+                
+                <div class="info-box">
+                    <strong>About:</strong> Tests the automatic sound notification when an order status changes to "Ready".
+                </div>
+
+                <div>
+                    <button class="test-button success" onclick="testCustomerSound()">
+                        Play Customer Sound
+                    </button>
+                    <button class="test-button" onclick="testCustomerOrderReady()">
+                        Simulate Order Ready
+                    </button>
+                    <button class="test-button warning" onclick="clearCustomerStorage()">
+                        Clear Customer Storage
+                    </button>
+                </div>
+
+                <h3 style="margin-top: 20px; color: #333;">Customer Sound Status:</h3>
+                <table>
+                    <tr>
+                        <th>Property</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Sound Enabled</td>
+                        <td><span class="status-badge active" id="customerSoundEnabled">Checking...</span></td>
+                    </tr>
+                    <tr>
+                        <td>Audio File</td>
+                        <td><code>/food-ordering-system/assets/sounds/se.mp3</code></td>
+                    </tr>
+                    <tr>
+                        <td>localStorage Key</td>
+                        <td><code>customerSoundEnabled</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Audio Context Test -->
+            <div class="section">
+                <h2>🎵 Audio Context & Browser Support</h2>
+                
+                <div class="info-box">
+                    <strong>About:</strong> Checks if your browser supports audio playback and detects autoplay restrictions.
+                </div>
+
+                <button class="test-button" onclick="testAudioContext()">
+                    Test Audio Context
+                </button>
+                <button class="test-button" onclick="testAutoplayPolicy()">
+                    Check Autoplay Policy
+                </button>
+
+                <div id="audioContextResults"></div>
+            </div>
+
+            <!-- Troubleshooting Checklist -->
+            <div class="section">
+                <h2>✓ Troubleshooting Checklist</h2>
+                
+                <ul class="checklist">
+                    <li>
+                        <strong>Sound File Exists:</strong> Verify /assets/sounds/se.mp3 exists
+                        <button class="test-button test-button" style="float: right; margin: 0;" onclick="checkSoundFile()">Check</button>
+                    </li>
+                    <li>
+                        <strong>Browser Volume:</strong> Check your browser/system volume is not muted
+                        <button class="test-button warning" style="float: right; margin: 0;" onclick="alert('System volume: Check your device volume settings. Browser volume: Usually controlled with device volume.')">Help</button>
+                    </li>
+                    <li>
+                        <strong>localStorage Enabled:</strong> Verify browser localStorage is enabled
+                        <button class="test-button" style="float: right; margin: 0;" onclick="testLocalStorage()">Check</button>
+                    </li>
+                    <li>
+                        <strong>Autoplay Permissions:</strong> Check if your browser allows autoplay
+                        <button class="test-button" style="float: right; margin: 0;" onclick="testAutoplayPolicy()">Check</button>
+                    </li>
+                    <li>
+                        <strong>Refresh Kitchen Panel:</strong> Do a hard refresh (Ctrl+Shift+R) on kitchen dashboard
+                        <button class="test-button warning" style="float: right; margin: 0;" onclick="alert('Hard refresh: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)')">Help</button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Debug Log -->
+            <div class="section">
+                <h2>📋 Debug Log</h2>
+                
+                <button class="test-button danger" onclick="clearLog()">Clear Log</button>
+                <button class="test-button" onclick="exportLog()">Export Log</button>
+
+                <div class="log-box" id="logBox">
+                    <div class="log-entry info">
+                        <span class="timestamp">[Ready]</span>
+                        Sound system test page loaded. Click test buttons to begin.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Guide -->
+            <div class="section">
+                <h2>📚 Implementation Details</h2>
+                
+                <div class="success-box">
+                    <strong>✓ Kitchen Panel Changes:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Sound enabled by default (no manual play required)</li>
+                        <li>Plays automatically when new order detected</li>
+                        <li>5-second refresh interval to check for orders</li>
+                        <li>Detects NEW orders by comparing order IDs</li>
+                        <li>Sound button toggles sound on/off</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <strong>✓ Customer Panel Changes:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Sound enabled by default (no manual activation needed)</li>
+                        <li>Plays automatically when order status changes to "Ready"</li>
+                        <li>5-second monitoring interval for status updates</li>
+                        <li>Detects status changes for all customer orders</li>
+                        <li>Sound button toggles sound on/off</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <strong>Browser Compatibility Notes:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Modern browsers require user interaction to unlock audio context</li>
+                        <li>Click any button after page load to unlock audio playback</li>
+                        <li>Autoplay policy: Some browsers block autoplay without user gesture</li>
+                        <li>Muting/disabling sound doesn't break functionality, just silences notifications</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Elements for Testing -->
+    <audio id="testSound" src="/food-ordering-system/assets/sounds/se.mp3" preload="auto"></audio>
+
+    <script>
+        // ========== LOGGING SYSTEM ==========
+        function log(message, type = 'info') {
+            const logBox = document.getElementById('logBox');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry ' + type;
+            
+            const time = new Date().toLocaleTimeString();
+            entry.innerHTML = `<span class="timestamp">[${time}]</span> ${message}`;
+            
+            logBox.appendChild(entry);
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('logBox').innerHTML = '';
+            log('Log cleared', 'warning');
+        }
+
+        function exportLog() {
+            const log = document.getElementById('logBox').innerText;
+            const blob = new Blob([log], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sound-debug-log.txt';
+            a.click();
+            log('Log exported', 'success');
+        }
+
+        // ========== KITCHEN PANEL TESTS ==========
+        function testKitchenSound() {
+            log('Testing kitchen sound...', 'info');
+            const audio = new Audio('/food-ordering-system/assets/sounds/se.mp3');
+            audio.volume = 1.0;
+            audio.play()
+                .then(() => {
+                    log('✓ Kitchen sound played successfully', 'success');
+                })
+                .catch(e => {
+                    log('✗ Kitchen sound failed: ' + e.name, 'error');
+                });
+        }
+
+        function testKitchenNewOrder() {
+            log('Simulating new kitchen order...', 'info');
+            localStorage.setItem('testNewKitchenOrder', Date.now());
+            const enabled = localStorage.getItem('kitchenSoundEnabled') !== 'false';
+            if (enabled) {
+                testKitchenSound();
+                log('Simulation: New order detected, sound played', 'success');
+            } else {
+                log('Simulation: New order detected, but sound disabled', 'warning');
+            }
+        }
+
+        function clearKitchenStorage() {
+            localStorage.removeItem('kitchenSoundEnabled');
+            log('Kitchen localStorage cleared, sound will reset to enabled on next load', 'warning');
+        }
+
+        // ========== CUSTOMER PANEL TESTS ==========
+        function testCustomerSound() {
+            log('Testing customer sound...', 'info');
+            const audio = new Audio('/food-ordering-system/assets/sounds/se.mp3');
+            audio.volume = 1.0;
+            audio.play()
+                .then(() => {
+                    log('✓ Customer sound played successfully', 'success');
+                })
+                .catch(e => {
+                    log('✗ Customer sound failed: ' + e.name, 'error');
+                });
+        }
+
+        function testCustomerOrderReady() {
+            log('Simulating customer order ready...', 'info');
+            localStorage.setItem('testOrderReady', Date.now());
+            const enabled = localStorage.getItem('customerSoundEnabled') !== 'false';
+            if (enabled) {
+                testCustomerSound();
+                log('Simulation: Order is Ready, sound played', 'success');
+            } else {
+                log('Simulation: Order is Ready, but sound disabled', 'warning');
+            }
+        }
+
+        function clearCustomerStorage() {
+            localStorage.removeItem('customerSoundEnabled');
+            log('Customer localStorage cleared, sound will reset to enabled on next load', 'warning');
+        }
+
+        // ========== AUDIO CONTEXT TESTS ==========
+        function testAudioContext() {
+            log('Testing audio context...', 'info');
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    const ctx = new AudioContext();
+                    log('✓ AudioContext supported: ' + ctx.state, 'success');
+                    log('Sample rate: ' + ctx.sampleRate + ' Hz', 'info');
+                } else {
+                    log('✗ AudioContext not supported', 'error');
+                }
+            } catch (e) {
+                log('✗ AudioContext error: ' + e.message, 'error');
+            }
+        }
+
+        function testAutoplayPolicy() {
+            log('Checking autoplay policy...', 'info');
+            const audio = new Audio('/food-ordering-system/assets/sounds/se.mp3');
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        log('✓ Autoplay allowed', 'success');
+                    })
+                    .catch(e => {
+                        log('⚠️ Autoplay blocked: ' + e.name, 'warning');
+                        log('Solution: Click a button on the page to unlock audio', 'info');
+                    });
+            }
+        }
+
+        // ========== TROUBLESHOOTING TESTS ==========
+        function checkSoundFile() {
+            log('Checking sound file...', 'info');
+            fetch('/food-ordering-system/assets/sounds/se.mp3')
+                .then(r => {
+                    if (r.ok) {
+                        log('✓ Sound file found (HTTP ' + r.status + ')', 'success');
+                    } else {
+                        log('✗ Sound file not found (HTTP ' + r.status + ')', 'error');
+                    }
+                })
+                .catch(e => {
+                    log('✗ Cannot reach sound file: ' + e.message, 'error');
+                });
+        }
+
+        function testLocalStorage() {
+            log('Testing localStorage...', 'info');
+            try {
+                localStorage.setItem('test', 'value');
+                const value = localStorage.getItem('test');
+                if (value === 'value') {
+                    log('✓ localStorage is enabled and working', 'success');
+                    localStorage.removeItem('test');
+                } else {
+                    log('✗ localStorage not working properly', 'error');
+                }
+            } catch (e) {
+                log('✗ localStorage error: ' + e.message, 'error');
+            }
+        }
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Initializing debug page...', 'info');
+            
+            // Check storage settings
+            const kitchenEnabled = localStorage.getItem('kitchenSoundEnabled') !== 'false';
+            const customerEnabled = localStorage.getItem('customerSoundEnabled') !== 'false';
+            
+            document.getElementById('kitchenSoundEnabled').textContent = kitchenEnabled ? 'ENABLED' : 'DISABLED';
+            document.getElementById('kitchenSoundEnabled').className = kitchenEnabled ? 'status-badge active' : 'status-badge inactive';
+            
+            document.getElementById('customerSoundEnabled').textContent = customerEnabled ? 'ENABLED' : 'DISABLED';
+            document.getElementById('customerSoundEnabled').className = customerEnabled ? 'status-badge active' : 'status-badge inactive';
+            
+            log('Kitchen sound: ' + (kitchenEnabled ? 'Enabled' : 'Disabled'), 'info');
+            log('Customer sound: ' + (customerEnabled ? 'Enabled' : 'Disabled'), 'info');
+            log('All systems ready for testing', 'success');
+        });
+    </script>
+</body>
+</html>

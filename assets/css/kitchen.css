@@ -1,0 +1,55 @@
+/* kitchen.css - Kitchen specific styles */
+
+.kitchen-navbar {
+    background: #2F5249;
+    color: white;
+    padding: 15px 0;
+}
+
+.navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kitchen-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.order-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.kitchen-order-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-left: 5px solid #2F5249;
+}
+
+.order-number {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-time {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.status-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}

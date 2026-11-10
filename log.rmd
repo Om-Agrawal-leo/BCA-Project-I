@@ -1,0 +1,58 @@
+
+# Project Supervisor Log Sheet
+
+---
+
+## Student Details
+
+| Field               | Details                               |
+| ------------------- | ------------------------------------- |
+| **Student Name**        |                                       |
+| **Registration No.**  |                                       |
+| **Program/Semester**  |                                       |
+| **Project Title**     |                                       |
+| **Department**        |                                       |
+| **Supervisor Name**   |                                       |
+
+---
+
+## Supervisor Meeting Log
+
+| S.N | Date | Project Stage                       | Work Discussed/Progress | Supervisor Suggestions | Student Signature | Supervisor Signature |
+| --- | ---- | ----------------------------------- | ----------------------- | ---------------------- | ----------------- | -------------------- |
+| 1   |      | **Before Proposal Defense**         | Initial ideas, literature review plan. | Refine project scope, focus on 2-3 key papers. |                   |                      |
+| 2   |      |                                     | Draft of proposal introduction and problem statement. | Strengthen the problem statement with recent stats. |                   |                      |
+| 3   |      |                                     | Final proposal draft review. | Add a timeline (Gantt chart) for methodology. |                   |                      |
+| 4   |      | **After Proposal Defense**          | Feedback from defense, refined objectives. | Start implementing Module 1 (User Authentication). |                   |                      |
+| 5   |      |                                     | Basic UI/UX design sketches. | Use a standard UI framework like Bootstrap or Materialize. |                   |                      |
+| 6   |      |                                     | Database schema design. | Normalize the tables to 3NF, add indexes. |                   |                      |
+| 7   |      | **Before Mid-Term Defense**         | Completed Modules 1 & 2. Demo of core features. | Prepare a detailed presentation, focus on achievements. |                   |                      |
+| 8   |      |                                     | Mid-term report draft. | Add more citations in the literature review section. |                   |                      |
+| 9   |      |                                     | Presentation slide review. | Time the presentation, ensure it's within 15 minutes. |                   |                      |
+| 10  |      | **After Completing 80% of Work**    | Integration of all modules, initial testing phase. | Write comprehensive unit tests for all functions. |                   |                      |
+| 11  |      |                                     | User acceptance testing (UAT) feedback. | Fix the reported bugs, improve UI responsiveness. |                   |                      |
+| 12  |      |                                     | Final report writing started. | Follow the university's official thesis template. |                   |                      |
+| 13  |      | **Before Final Defense**            | Complete system demo, final report draft. | Review the conclusion and future work sections. |                   |                      |
+| 14  |      |                                     | Final presentation run-through. | Be prepared for Q&A, anticipate potential questions. |                   |                      |
+| 15  |      |                                     | Final code submission and documentation. | Ensure the code is well-commented and a README is included. |                   |                      |
+
+---
+
+## Final Supervisor Remarks
+
+| Remarks |
+| ------- |
+|         |
+|         |
+|         |
+|         |
+
+---
+
+## Approval
+
+This is to certify that the project has been completed under my supervision and is ready for submission.
+
+**Supervisor's Signature:** ____________________________
+
+**Date:** ____________________________

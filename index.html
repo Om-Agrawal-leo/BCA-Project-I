@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Ordering System - Welcome</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Main Container */
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Header */
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 50px;
+        }
+
+        /* Role Selection Cards */
+        .role-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .role-card {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .role-card.admin {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .role-card.customer {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .role-card.kitchen {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .role-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .role-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .role-description {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .role-container {
+                flex-direction: column;
+            }
+
+            .role-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1>🍔 Food Ordering System</h1>
+        <p class="subtitle">Select your role to continue</p>
+
+        <!-- Role Selection Cards -->
+        <div class="role-container">
+            <!-- Admin Card -->
+            <a href="admin/index.php" class="role-card admin">
+                <div class="role-icon">👨‍💼</div>
+                <div class="role-title">Admin</div>
+                <div class="role-description">
+                    Manage categories, food items, orders, and sales
+                </div>
+            </a>
+
+            <!-- Customer Card -->
+            <a href="customer/login.php" class="role-card customer">
+                <div class="role-icon">👤</div>
+                <div class="role-title">Customer</div>
+                <div class="role-description">
+                    Browse menu, place orders, and track delivery
+                </div>
+            </a>
+
+            <!-- Kitchen Card -->
+            <a href="kitchen/index.php" class="role-card kitchen">
+                <div class="role-icon">👨‍🍳</div>
+                <div class="role-title">Kitchen</div>
+                <div class="role-description">
+                    View incoming orders and update status
+                </div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2024 Food Ordering System. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
